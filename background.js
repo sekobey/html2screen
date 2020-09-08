@@ -22,11 +22,17 @@ chrome.runtime.onConnect.addListener(port => {
         chrome.desktopCapture.chooseDesktopMedia(['tab', 'audio'], streamId => {
           // Get the stream
           navigator.webkitGetUserMedia({
-            audio: false,
+            audio: {
+              mandatory: {
+                      chromeMediaSource: 'desktop',
+                      chromeMediaSourceId: streamId
+                  }
+            },
             video: {
               mandatory: {
                 chromeMediaSource: 'desktop',
-                chromeMediaSourceId: streamId
+                chromeMediaSourceId: streamId,
+                maxFrameRate:30
               }
             }
           }, stream => {
